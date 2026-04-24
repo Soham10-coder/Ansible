@@ -1,0 +1,40 @@
+---
+- name: "Tags Ex"
+  hosts: father
+  tasks:
+    - name: "adding user raj"
+      user:
+        name: Raj
+        state: present
+      tags:
+        - useradd
+    - name: "deleting user raj"
+      user:
+        name: jack
+        state: absent
+      tags:
+        - userdel
+              
+    - name: "adding new file"
+      file:
+        name: /mnt/f1
+        state: touch
+      tags:
+        - addfile
+    - name: "adding new file"
+      file:
+        name: /mnt/f1
+        state: absent
+      tags:
+        - rmfile
+
+
+
+
+
+
+
+
+
+
+...

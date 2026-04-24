@@ -1,0 +1,21 @@
+---
+- name: "This is my first plau"
+  hosts: controler
+  tasks:
+    - name: "this play is for useradd and userdel"
+      user:
+        name: shri
+        state: present
+    - name: "task to del user"
+      user:
+        name: shri
+        state: absent
+    - name: "adding appache2 package"
+      yum:
+        name: httpd
+        state: present
+    - name: "deleting pkg"
+      yum:
+        name: httpd
+        state: absent
+...

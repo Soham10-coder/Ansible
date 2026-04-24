@@ -1,0 +1,6 @@
+flist:
+  - /root/a/a1
+  - /root/a/a2
+  - /root/a/a3
+  - /root/a/a4
+  - /root/a/a5

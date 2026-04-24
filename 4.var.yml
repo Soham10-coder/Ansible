@@ -1,0 +1,11 @@
+---
+- name: "variable ex"
+  hosts: data
+  vars:
+    u1: jack
+  tasks:
+    - name: "add user"
+      user:
+        name: "{{u1}}"
+        state: present 
+...

@@ -1,0 +1,147 @@
+---
+# adding user by looping and vars and tags
+- name: "practise play"
+  hosts: controler
+  tasks:
+    - name: "adding user"
+      user:
+        name: "{{item}}"
+        state: present
+      loop:
+        - a1
+        - b2
+        - c3
+        - d4
+        - e6
+      ignore_errors: yes
+      notify: adduser
+      tags:
+        - useradd
+
+
+# removing user by looping and vars and tags
+
+    - name: "removing user"
+      user:
+        name: "{{item}}"
+        state: absent
+      loop:
+        - a1
+        - b2
+        - c3
+        - d4
+        - e6
+      tags:
+        - userdel
+      ignore_errors: yes
+
+ # seeing o/p by registered variable
+    - name: "registerd vars to see o/p"
+      shell: grep -Ri omi /etc/passwd 
+      register: res
+      tags:
+        - reg
+    - name: "show op" 
+      debug:
+        var: res.stdout
+      tags:
+        - reg
+  handlers:
+    - name: adduser
+      user:
+        name: "{{item}}"
+        state: absent
+      loop:
+        - a1
+        - b2
+        - c3
+        - d4
+        - e6
+
+
+# file add ex
+- name: "adding files by loop"
+  hosts: father
+  vars:
+    many:
+      - /mnt/f1
+      - /mnt/f2
+      - /mnt/f3
+  tasks:
+    - name: "adding file"
+      file:
+        name: "{{item}}"
+        state: touch
+      loop: "{{many}}"
+      tags:
+        - add
+      ignore_errors: yes
+
+#file remove ex
+    - name: "removing file"
+      file:
+        name: "{{item}}"
+        state: absent
+      loop: "{{many}}"
+      tags:
+        - rm
+      ignore_errors: yes
+
+#error handling EX1
+    - name: "error handling"
+      block:
+        - name: "block running"
+          command: /bin/false
+      rescue:
+        - name: "rescue running"
+          debug:
+            msg: "failed"
+      always:
+        - name: "always running"
+          debug:
+            msg: "always run"
+      tags:
+        - test
+
+#error handling EX2
+    - name: "error handling 2"
+      block:
+        - name: "block running to restart httpd"
+          service:
+            name: httpd
+            state: restarted
+      rescue:
+        - name: "insatlling httpd if not present"
+          yum:
+            name: httpd
+            state: present
+        - debug:
+            msg: "httpd installed"
+      always:
+        - name: "making file to make webpage"
+          file:
+            name: /mnt/sb
+            state: touch
+        - debug:
+            msg: "made file"
+      tags:
+        - errhandle
+#Ansible handling ex
+    - name: "Ansible Handling EX"
+      yum:
+        name: httpd
+        state: present
+      notify: restart httpd
+      tags:
+        - handle
+  handlers:
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
+
+
+
+
+
+...

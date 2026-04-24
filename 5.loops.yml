@@ -1,0 +1,48 @@
+---
+- name: "Loops playbook"
+  vars_files:
+    - /root/playbooks/5.txt
+  hosts: data
+  tasks:
+    - name: "file adding task"
+      file:
+        name: "{{item}}"
+        state: touch
+      loop: "{{flist}}"
+      tags:
+        - cfile
+    - name: "file deleting task"
+      file:
+        name: "{{item}}"
+        state: absent
+      loop: "{{flist}}"
+      tags:
+        - dfile
+        
+    - name: "adding users"
+      user:
+        name: "{{item}}"
+        state: present
+      loop:
+        - soham
+        - shri
+        - u1
+        - u2
+        - u3
+      tags:
+        - cuser
+    - name: "removing users"
+      user:
+        name: "{{item}}"
+        state: absent
+      loop:
+        - soham
+        - shri
+        - u1
+        - u2
+        - u3
+      tags:
+        - duser
+...
+
+

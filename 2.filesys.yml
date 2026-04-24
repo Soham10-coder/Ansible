@@ -1,0 +1,28 @@
+---
+- name: "play to add del files"
+  hosts: controler
+  tasks:
+    - name: "adding newq file"
+      file:
+        name: /mnt/abc
+        state: touch
+    - name: "removing files"
+      file:
+        name:  /mnt/abc
+        state: absent
+
+- name: "play to add del dir"
+  hosts: data
+  tasks:    
+    - name: "adding dir"
+      file:
+        name: /mnt/dir1
+        state: directory
+    
+    - name: "removing dir"
+      file:
+        name:  /mnt/dir1
+        state: absent
+
+
+...
