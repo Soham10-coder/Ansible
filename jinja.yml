@@ -1,0 +1,17 @@
+---
+- hosts: controler
+  tasks:
+    - name: "instaling Apache"
+      yum:
+        name: httpd
+        state: present
+    - name: "using jinja"  
+      template:
+        src: /root/playbooks/web.j2
+        dest: /var/www/html/index.html
+    - name: "restarting apache"
+      service:
+        name: httpd
+        state: restarted
+
+...

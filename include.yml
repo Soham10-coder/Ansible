@@ -1,0 +1,4 @@
+- name: "inclusion ex"
+  hosts: controler
+  tasks:
+    - include_tasks: /root/playbooks/tasks.yml

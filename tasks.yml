@@ -1,0 +1,4 @@
+- name: "removing user"
+  user:
+    name: jack
+    state: absent
