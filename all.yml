@@ -140,8 +140,18 @@
         name: httpd
         state: restarted
 
-
-
-
+#Conditional play
+    - name: "adding user by condition"
+      user:
+        name: "{{item}}"
+        state: present
+      loop:
+        - soham
+        - sohan
+        - mohan
+      when: item == "mohan"
+      tags:
+        - cond
+        
 
 ...

@@ -1,0 +1,42 @@
+- name: "condition play"
+  hosts: controler
+  vars:
+    ulist:
+      - jack
+      - adi
+      - ved
+      - ram
+      - jay
+    users:
+      - jack
+      - mage
+      - ram
+      - raj
+      - aru
+  tasks:
+    - name: "adding users by condition"
+      user:
+        name: "{{item}}"
+        state: present
+      loop: "{{users}}"
+      when: item == "raj" or item == "aru"
+    - name: "adding user by condition"
+      user:
+        name: "{{item}}"
+        state: present
+      loop: "{{users}}"
+      when: item == "mage"
+      tags:
+        - cond
+    - name: "adding user by condition"
+      user:
+        name: "{{item}}"
+        state: present
+      loop:
+        - soham
+        - sohan
+        - mohan
+      when: item == "mohan"
+      tags:
+        - condition
+
