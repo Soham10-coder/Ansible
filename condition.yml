@@ -39,4 +39,11 @@
       when: item == "mohan"
       tags:
         - condition
+    - name: "installing file by ipv4 condition"
+      yum:
+        name: httpd
+        state: present
+      when: ansible_default_ipv4.address == "172.31.33.182"
+      tags:
+        - ipaddr
 
